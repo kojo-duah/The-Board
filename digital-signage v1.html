@@ -613,16 +613,6 @@ Object.values(WEATHER_PHOTOS).forEach(url => { const img = new Image(); img.src 
 const WMO_ICON = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',56:'🌧️',57:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',66:'🌧️',67:'🌧️',71:'🌨️',73:'🌨️',75:'❄️',77:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',85:'🌨️',86:'❄️',95:'⛈️',96:'⛈️',99:'⛈️'};
 const WMO_TEXT = {0:'Clear',1:'Mostly Clear',2:'Partly Cloudy',3:'Overcast',45:'Fog',48:'Rime Fog',51:'Light Drizzle',53:'Drizzle',55:'Heavy Drizzle',56:'Freezing Drizzle',57:'Hvy Freezing Drizzle',61:'Light Rain',63:'Rain',65:'Heavy Rain',66:'Freezing Rain',67:'Hvy Freezing Rain',71:'Light Snow',73:'Snow',75:'Heavy Snow',77:'Snow Grains',80:'Showers',81:'Showers',82:'Heavy Showers',85:'Snow Showers',86:'Heavy Snow',95:'Thunderstorm',96:'T-storm + Hail',99:'Severe T-storm'};
 
-function getScene(code, isDay) {
-  if (!isDay) return 'night';
-  if (code === 45 || code === 48) return 'fog';
-  if ((code>=71&&code<=77)||(code>=85&&code<=86)) return 'snowy';
-  if (code>=95) return 'thunderstorm';
-  if ((code>=51&&code<=67)||(code>=80&&code<=82)) return 'rainy';
-  if (code===0) return 'sunny';
-  if (code<=2) return 'partly-cloudy';
-  return 'cloudy';
-}
 
 // ═════════════════════════════════════════════════
 // APPLY WEATHER BACKGROUND
@@ -756,7 +746,6 @@ async function fetchWeather() {
     const scene = getScene(code, isDay);
     applyBackground(scene);
     renderEffects(scene);
-
     // Forecast
     const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     const strip = document.getElementById('forecast-strip');
