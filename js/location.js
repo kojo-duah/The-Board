@@ -1,9 +1,9 @@
 import { CONFIG } from "./config";
-export // ═════════════════════════════════════════════════
+// ═════════════════════════════════════════════════
 // AUTO-DETECT LOCATION — like iPhone auto-switching
 // Uses GPS → reverse geocode for city name → updates everything
 // ═════════════════════════════════════════════════
-async function reverseGeocode(lat, lon) {
+export async function reverseGeocode(lat, lon) {
   // Open-Meteo has a free geocoding API (no key needed)
   try {
     const r = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
@@ -20,7 +20,7 @@ async function reverseGeocode(lat, lon) {
   }
 }
 
-function applyLocation(lat, lon, name) {
+ export function applyLocation(lat, lon, name) {
   CONFIG.location = { name, lat, lon };
   // Detect timezone from the browser (matches the physical location)
   CONFIG.weather.params.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -34,7 +34,7 @@ function applyLocation(lat, lon, name) {
   fetchWeather();
 }
 
-async function detectLocation() {
+export async function detectLocation() {
   // Try GPS first
   if ('geolocation' in navigator) {
     try {
