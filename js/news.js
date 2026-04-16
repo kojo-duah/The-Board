@@ -1,4 +1,5 @@
-import { CONFIG } from "./config";
+import { CONFIG } from "./config.js";
+import { timeAgo, esc } from "./ui.js";
 // ═════════════════════════════════════════════════
 // NEWS
 // ═════════════════════════════════════════════════
