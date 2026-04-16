@@ -1,13 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
 <title>DigiSign — Denver, CO</title>
-</head>
 <link rel="stylesheet" href="styles.css">
-<script type="module" src="js/app.js" defer></script>
+</head>
 <body>
 
 <!-- Full-screen weather photo background -->
@@ -21,11 +19,10 @@
 <!-- Settings gear -->
 <button class="settings-btn" 
 id="settings-btn" 
-title="Feed settings">&#9881;
-</button>
+title="Feed settings">&#9881;</button>
 
 <!-- Settings panel -->
-<div class="settings-overlay" id="settings-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+<div class="settings-overlay" id="settings-overlay">
   <div class="settings-panel">
     <h3>RSS Feed Sources</h3>
     <div class="feed-list" id="feed-list"></div>
@@ -34,12 +31,11 @@ title="Feed settings">&#9881;
       <input type="text" id="add-feed-url" placeholder="RSS feed URL…">
       <button class="btn-sm" id="add-feed-btn">Add</button>
     </div>
-    <button class="btn-close-settings" onclick="document.getElementById('settings-overlay').classList.remove('open')">Done</button>
+    <button class="btn-close-settings" id="close-settings-btn">Done</button>
   </div>
 </div>
 
 <div id="app">
-
   <!-- Location label like iPhone -->
   <div class="location-bar">
     <div class="location-name">
@@ -95,5 +91,6 @@ title="Feed settings">&#9881;
   </div>
 
 </div>
+<script type="module" src="js/app.js" defer></script>
 </body>
 </html>
