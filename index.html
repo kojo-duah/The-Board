@@ -19,7 +19,9 @@
 <div id="weather-bg-blur"></div>
 
 <!-- Settings gear -->
-<button class="settings-btn" onclick="document.getElementById('settings-overlay').classList.add('open')" title="Feed settings">&#9881;</button>
+<button class="settings-btn" 
+onclick="document.getElementById('settings-overlay').classList.add('open')" 
+title="Feed settings">&#9881;</button>
 
 <!-- Settings panel -->
 <div class="settings-overlay" id="settings-overlay" onclick="if(event.target===this)this.classList.remove('open')">
@@ -29,7 +31,7 @@
     <div class="feed-add-row">
       <input type="text" id="add-feed-name" placeholder="Name (e.g. NPR)" style="max-width:70px">
       <input type="text" id="add-feed-url" placeholder="RSS feed URL…">
-      <button class="btn-sm" onclick="addFeed()">Add</button>
+      <button class="btn-sm" id="add-feed-btn">Add</button>
     </div>
     <button class="btn-close-settings" onclick="document.getElementById('settings-overlay').classList.remove('open')">Done</button>
   </div>
