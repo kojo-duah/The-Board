@@ -9,5 +9,7 @@ export function timeAgo(d) {
   return Math.floor(s / 31536000) + 'y ago';
 }
 export function esc(str) { 
-    const d = document.createElement('div'); d.textContent = str; return d.innerHTML; 
+    const d = document.createElement('div'); 
+    d.textContent = str; 
+    return d.innerHTML; 
 }
