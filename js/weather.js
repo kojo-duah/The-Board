@@ -77,3 +77,50 @@ export function renderEffects(scene) {
     }
   }
 }
+export async function fetchWeather() {
+  try {
+    const p = CONFIG.weather.params;
+    const url = `${CONFIG.weather.apiUrl}?latitude=${CONFIG.location.lat}&longitude=${CONFIG.location.lon}`
+      + `&current=${p.current}&daily=${p.daily}&timezone=${encodeURIComponent(p.timezone)}`
+      + `&temperature_unit=${p.temperature_unit}&wind_speed_unit=${p.wind_speed_unit}`
+      + `&precipitation_unit=${p.precipitation_unit}&forecast_days=${p.forecast_days}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const code = data.current.weather_code;
+    const isDay = data.current.is_day === 1;
+    const temp = Math.round(data.current.temperature_2m);
+    const hi = Math.round(data.daily.temperature_2m_max[0]);
+    const lo = Math.round(data.daily.temperature_2m_min[0]);
+
+    document.getElementById('w-icon').textContent = WMO_ICON[code] || '🌡️';
+    document.getElementById('w-temp').innerHTML = `${temp}<span class="w-temp-unit">°F</span>`;
+    document.getElementById('w-cond').textContent = WMO_TEXT[code] || 'Unknown';
+    document.getElementById('w-hilo').textContent = `H:${hi}° L:${lo}°`;
+
+    const scene = getScene(code, isDay);
+    applyBackground(scene);
+    renderEffects(scene);
+    // Forecast
+    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const strip = document.getElementById('forecast-strip');
+    strip.innerHTML = '';
+    for (let i = 0; i < data.daily.time.length; i++) {
+      const d = new Date(data.daily.time[i]+'T12:00:00');
+      const label = i===0 ? 'Today' : dayNames[d.getDay()];
+      const dc = data.daily.weather_code[i];
+      const dhi = Math.round(data.daily.temperature_2m_max[i]);
+      const precip = data.daily.precipitation_probability_max[i];
+      strip.innerHTML += `<div class="glass">
+        <div class="fc-day">${label}</div><div class="fc-icon">${WMO_ICON[dc]||'🌡️'}</div>
+        <div class="fc-temp">${dhi}°</div>
+        <div class="fc-precip">${precip>10 ? '💧'+precip+'%' : ''}</div>
+      </div>`;
+    }
+  } catch(e) {
+    console.error('Weather error:', e);
+    document.getElementById('w-cond').textContent = 'Offline';
+    // Fallback background
+    applyBackground('cloudy');
+  }
+}
