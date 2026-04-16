@@ -1,8 +1,8 @@
-import { CONFIG } from "./config";
-import { renderFeedList, settingsButton } from "./settings";
-import { fetchNews, cycleNews } from "./news";
-import { detectLocation } from "./location";
-import { fetchWeather } from "./weather";
+import { CONFIG } from "./config.js";
+import { renderFeedList, settingsButton } from "./settings.js";
+import { fetchNews, cycleNews } from "./news.js";
+import { detectLocation } from "./location.js";
+import { fetchWeather } from "./weather.js";
 function init() {
     //Settings
     renderFeedList();
@@ -18,7 +18,6 @@ function init() {
     setInterval(detectLocation, 60 * 60 * 1000);
 
     //Weather
-    fetchWeather();
     setInterval(fetchWeather, 15 * 60 * 1000);
 }
 document.addEventListener('DOMContentLoaded', init);
