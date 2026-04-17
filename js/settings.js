@@ -52,7 +52,7 @@ export function settingsButton() {
 
     //close panel (Done button)
     closeBtn.addEventListener('click', () => {
-        overlay.classList.add('open');
+        overlay.classList.remove('open');
     });
     
     // close when clicking outside
