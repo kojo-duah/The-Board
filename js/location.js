@@ -1,4 +1,6 @@
-import { CONFIG } from "./config";
+import { CONFIG } from "./config.js";
+import { updateClock, updateCalendar } from "./clock.js";
+import { fetchWeather } from "./weather.js";
 // ═════════════════════════════════════════════════
 // AUTO-DETECT LOCATION — like iPhone auto-switching
 // Uses GPS → reverse geocode for city name → updates everything
@@ -19,7 +21,6 @@ export async function reverseGeocode(lat, lon) {
     return `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
   }
 }
-
  export function applyLocation(lat, lon, name) {
   CONFIG.location = { name, lat, lon };
   // Detect timezone from the browser (matches the physical location)
@@ -33,7 +34,6 @@ export async function reverseGeocode(lat, lon) {
   updateCalendar();
   fetchWeather();
 }
-
 export async function detectLocation() {
   // Try GPS first
   if ('geolocation' in navigator) {

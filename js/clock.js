@@ -1,9 +1,9 @@
-import { CONFIG } from "./config";
+import { CONFIG } from "./config.js";
 
-export // ═════════════════════════════════════════════════
+// ═════════════════════════════════════════════════
 // CLOCK — uses detected timezone so it's always local
 // ═════════════════════════════════════════════════
-function updateClock() {
+export function updateClock() {
   const tz = CONFIG.weather.params.timezone;
   const now = new Date();
   // Format time in the detected timezone
@@ -20,10 +20,10 @@ function updateClock() {
   }).format(now);
   document.getElementById('clock-date').textContent = dateFmt;
 }
-setInterval(updateClock, 1000); updateClock();
+
 
 // Calendar — also timezone-aware
-function updateCalendar() {
+export function updateCalendar() {
   const tz = CONFIG.weather.params.timezone;
   const now = new Date();
   const parts = new Intl.DateTimeFormat('en-US', {
@@ -36,4 +36,3 @@ function updateCalendar() {
   document.getElementById('cal-day').textContent = day;
   document.getElementById('cal-weekday').textContent = weekday;
 }
-setInterval(updateCalendar, 60000); updateCalendar();

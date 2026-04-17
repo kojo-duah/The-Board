@@ -1,4 +1,4 @@
-import { CONFIG, WEATHER_PHOTOS, WMO_ICON, WMO_TEXT } from "./config";
+import { CONFIG, WEATHER_PHOTOS, WMO_ICON, WMO_TEXT } from "./config.js";
 
 export function getScene(code, isDay) {
   if (!isDay) return 'night';
