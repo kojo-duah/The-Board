@@ -10,7 +10,7 @@ export function renderFeedList() {
       <button class="feed-del" data-index="${i}" title="Remove">&times;</button>
     </div>`).join('');
 
-    // attach delete listners after rendering
+    // attach delete listeners after rendering
     attachDeleteHandlers();
     function attachDeleteHandlers() {
     const buttons = document.querySelectorAll('.feed-del');
