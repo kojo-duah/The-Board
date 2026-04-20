@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+<title>DigiSign — Denver, CO</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Full-screen weather photo background -->
+<div id="weather-bg"></div>
+<div id="weather-anim-overlay"></div>
+<div class="weather-layer" id="weather-effects"></div>
+<!-- Pre-blurred bg — sits above effects, below #app — this is what
+     makes the frosted glass work identically in Safari, Chrome & Edge -->
+<div id="weather-bg-blur"></div>
+
+<!-- Settings gear -->
+<button class="settings-btn" 
+id="settings-btn" 
+title="Feed settings">&#9881;</button>
+
+<!-- Settings panel -->
+<div class="settings-overlay" id="settings-overlay">
+  <div class="settings-panel">
+    <h3>RSS Feed Sources</h3>
+    <div class="feed-list" id="feed-list"></div>
+    <div class="feed-add-row">
+      <input type="text" id="add-feed-name" placeholder="Name (e.g. NPR)" style="max-width:70px">
+      <input type="text" id="add-feed-url" placeholder="RSS feed URL…">
+      <button class="btn-sm" id="add-feed-btn">Add</button>
+    </div>
+    <button class="btn-close-settings" id="close-settings-btn">Done</button>
+  </div>
+</div>
+
+<div id="app">
+  <!-- Location label like iPhone -->
+  <div class="location-bar">
+    <div class="location-name">
+      <span class="loc-icon">☁️</span>
+      <span id="loc-text">Denver, CO</span>
+    </div>
+  </div>
+
+  <!-- Top Row: Clock | Weather | Calendar -->
+  <div class="widget-row">
+    <div class="glass widget-clock">
+      <div class="widget-label">Clock</div>
+      <div id="clock-time">--:--</div>
+      <div id="clock-date">Loading…</div>
+    </div>
+    <div class="glass widget-weather">
+      <div class="widget-label">Denver</div>
+      <div class="w-icon" id="w-icon">—</div>
+      <div class="w-temp" id="w-temp">--<span class="w-temp-unit">°</span></div>
+      <div class="w-cond" id="w-cond">…</div>
+      <div class="w-hilo" id="w-hilo"></div>
+    </div>
+    <div class="glass widget-calendar">
+      <div class="cal-month" id="cal-month">---</div>
+      <div class="cal-day" id="cal-day">--</div>
+      <div class="cal-weekday" id="cal-weekday">---</div>
+    </div>
+  </div>
+
+  <!-- Forecast -->
+  <div class="forecast-strip" id="forecast-strip"></div>
+
+  <!-- News -->
+  <div class="news-section">
+    <div class="glass">
+      <div class="news-header">
+        <div class="news-label">News Feed</div>
+        <div class="news-source-tag" id="news-source-tag">Loading…</div>
+      </div>
+      <div class="news-items" id="news-items">
+        <div class="news-item"><div class="skeleton" style="height:16px;width:80%;margin-bottom:7px"></div><div class="skeleton" style="height:11px;width:45%"></div></div>
+        <div class="news-divider"></div>
+        <div class="news-item"><div class="skeleton" style="height:16px;width:65%;margin-bottom:7px"></div><div class="skeleton" style="height:11px;width:40%"></div></div>
+        <div class="news-divider"></div>
+        <div class="news-item"><div class="skeleton" style="height:16px;width:72%;margin-bottom:7px"></div><div class="skeleton" style="height:11px;width:50%"></div></div>
+        <div class="news-divider"></div>
+        <div class="news-item"><div class="skeleton" style="height:16px;width:76%;margin-bottom:7px"></div><div class="skeleton" style="height:11px;width:43%"></div></div>
+        <div class="news-divider"></div>
+        <div class="news-item"><div class="skeleton" style="height:16px;width:68%;margin-bottom:7px"></div><div class="skeleton" style="height:11px;width:48%"></div></div>
+      </div>
+      <div class="carousel-indicator" id="carousel-dots"></div>
+    </div>
+  </div>
+
+</div>
+<script type="module" src="js/app.js" defer></script>
+</body>
+</html>
