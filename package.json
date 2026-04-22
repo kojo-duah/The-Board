@@ -1,13 +1,14 @@
 {
   "name": "the-board",
   "version": "1.0.0",
+  "type": "module",
   "description": "Project 2 for 3250",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "lint": "eslint .",
     "docs": "jsdoc -c jsdoc.json",
-    "check": "npm run lint && npm run test && run npm docs"
+    "check": "npm run lint && npm run test && npm run docs"
   },
   "keywords": [],
   "author": "",
