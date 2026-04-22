@@ -4,7 +4,10 @@
   "description": "Project 2 for 3250",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "lint": "eslint .",
+    "docs": "jsdoc -c jsdoc.json",
+    "check": "npm run lint && npm run test && run npm docs"
   },
   "keywords": [],
   "author": "",
