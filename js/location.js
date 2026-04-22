@@ -17,7 +17,7 @@ export async function reverseGeocode(lat, lon) {
     if (city && country) return `${city}, ${country}`;
     if (city) return city;
     return `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
-  } catch {
+  } catch(_) {
     return `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
   }
 }
@@ -40,7 +40,13 @@ export async function detectLocation() {
     try {
       const pos = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: false, timeout: 8000, maximumAge: 300000
+          // enableHighAccuracy: true uses GPS (on mobile) or precise WiFi/network
+          // positioning (on desktop). The extra timeout gives the device time to
+          // acquire a GPS fix — on a signage display this runs once then caches
+          // for 5 min (maximumAge), so the wait is a non-issue.
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 300000,
         });
       });
       const lat = pos.coords.latitude;
@@ -65,7 +71,7 @@ export async function detectLocation() {
       applyLocation(d.latitude, d.longitude, name);
       return;
     }
-  } catch { console.warn('IP geolocation failed'); }
+  } catch(_) { console.warn('IP geolocation failed'); }
 
   // Final fallback: use hardcoded Denver
   console.log('Using fallback location: Denver, CO');
