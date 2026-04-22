@@ -17,7 +17,7 @@ export async function reverseGeocode(lat, lon) {
     if (city && country) return `${city}, ${country}`;
     if (city) return city;
     return `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
-  } catch(_) {
+  } catch {
     return `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
   }
 }
@@ -65,7 +65,7 @@ export async function detectLocation() {
       applyLocation(d.latitude, d.longitude, name);
       return;
     }
-  } catch(_) { console.warn('IP geolocation failed'); }
+  } catch { console.warn('IP geolocation failed'); }
 
   // Final fallback: use hardcoded Denver
   console.log('Using fallback location: Denver, CO');

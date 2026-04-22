@@ -78,7 +78,7 @@ function formatTime12Hour(hours, minutes) {
     return `${displayHours}:${displayMinutes} ${period}`;
 }
 
-module.exports = {
+export {
     formatTemperature,
     getWeatherDescription,
     isValidCoordinates,

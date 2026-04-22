@@ -1,0 +1,24 @@
+{
+  "name": "the-board",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Project 2 for 3250",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "lint": "eslint .",
+    "docs": "jsdoc -c jsdoc.json",
+    "check": "npm run lint && npm run test && npm run docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.1",
+    "globals": "^17.5.0",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "jsdoc": "^4.0.5"
+  }
+}

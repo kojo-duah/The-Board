@@ -25,13 +25,13 @@ export async function fetchOneFeed(feed) {
       if (json.status === 'ok' && json.items?.length) {
         json.items.forEach(it => {
           let domain = '';
-          try { domain = new URL(it.link).hostname.replace('www.',''); } catch(_){}
+          try { domain = new URL(it.link).hostname.replace('www.',''); } catch { /*ignore invalid URL*/ }
           items.push({ title: it.title, link: it.link, pubDate: it.pubDate, source: feed.name, domain });
         });
         return items;
       }
     }
-  } catch(_) { /* try next */ }
+  } catch { /* try next */ }
 
   // ── Strategy 2: try each CORS proxy in order ──
   for (const makeUrl of CONFIG.corsProxies) {
@@ -47,11 +47,11 @@ export async function fetchOneFeed(feed) {
         const link    = item.querySelector('link')?.textContent || '';
         const pubDate = item.querySelector('pubDate')?.textContent || '';
         let domain = '';
-        try { domain = new URL(link).hostname.replace('www.',''); } catch(_){}
+        try { domain = new URL(link).hostname.replace('www.',''); } catch {/*ignore invalid URL*/}
         items.push({ title, link, pubDate, source: feed.name, domain });
       });
       return items; // success — stop trying proxies
-    } catch(_) { /* try next proxy */ }
+    } catch { /* try next proxy */ }
   }
 
   console.warn(`All proxies failed for [${feed.name}]`);
