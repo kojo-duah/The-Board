@@ -1,4 +1,10 @@
 // Utility functions for The Board
+//
+// NOTE: Converted from CommonJS (`module.exports`) to ES modules so the file
+// works with `"type": "module"` in package.json and the ESM import/export
+// style used by the rest of the codebase (config.js, weather.js, etc.).
+// These helpers aren't wired into the app yet — they're here for future use
+// (e.g. formatTemperature for weather.js, isValidUrl for the RSS settings panel).
 
 /**
  * Format temperature with unit
@@ -6,7 +12,7 @@
  * @param {string} unit - Temperature unit (fahrenheit, celsius)
  * @returns {string} Formatted temperature
  */
-function formatTemperature(temp, unit = 'fahrenheit') {
+export function formatTemperature(temp, unit = 'fahrenheit') {
     const symbol = unit === 'fahrenheit' ? '°F' : '°C';
     return `${Math.floor(temp)}${symbol}`;
 }
@@ -16,7 +22,7 @@ function formatTemperature(temp, unit = 'fahrenheit') {
  * @param {number} code - WMO weather code
  * @returns {string} Weather description
  */
-function getWeatherDescription(code) {
+export function getWeatherDescription(code) {
     const WMO_TEXT = {
         0: 'Clear', 1: 'Mostly Clear', 2: 'Partly Cloudy', 3: 'Overcast',
         45: 'Fog', 48: 'Rime Fog', 51: 'Light Drizzle', 53: 'Drizzle',
@@ -32,7 +38,7 @@ function getWeatherDescription(code) {
  * @param {number} lon - Longitude
  * @returns {boolean} True if coordinates are valid
  */
-function isValidCoordinates(lat, lon) {
+export function isValidCoordinates(lat, lon) {
     return typeof lat === 'number' && typeof lon === 'number' &&
         lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
 }
@@ -43,7 +49,7 @@ function isValidCoordinates(lat, lon) {
  * @param {Date} date2 - Second date
  * @returns {number} Difference in milliseconds
  */
-function getTimeDifference(date1, date2) {
+export function getTimeDifference(date1, date2) {
     return Math.abs(date1 - date2);
 }
 
@@ -52,7 +58,7 @@ function getTimeDifference(date1, date2) {
  * @param {string} url - URL to validate
  * @returns {boolean} True if URL is valid
  */
-function isValidUrl(url) {
+export function isValidUrl(url) {
     if (!url || typeof url !== 'string') return false;
     try {
         const urlObj = new URL(url);
@@ -69,7 +75,7 @@ function isValidUrl(url) {
  * @param {number} minutes - Minutes
  * @returns {string} Time in 12-hour format
  */
-function formatTime12Hour(hours, minutes) {
+export function formatTime12Hour(hours, minutes) {
     // Normalize hours to 0-23 range
     const normalizedHours = hours % 24;
     const period = normalizedHours >= 12 ? 'PM' : 'AM';
@@ -77,12 +83,3 @@ function formatTime12Hour(hours, minutes) {
     const displayMinutes = String(minutes).padStart(2, '0');
     return `${displayHours}:${displayMinutes} ${period}`;
 }
-
-export {
-    formatTemperature,
-    getWeatherDescription,
-    isValidCoordinates,
-    getTimeDifference,
-    isValidUrl,
-    formatTime12Hour
-};
