@@ -25,7 +25,7 @@ export async function fetchOneFeed(feed) {
       if (json.status === 'ok' && json.items?.length) {
         json.items.forEach(it => {
           let domain = '';
-          try { domain = new URL(it.link).hostname.replace('www.',''); } catch { /*ignore invalid URL*/}
+          try { domain = new URL(it.link).hostname.replace('www.',''); } catch { /*ignore invalid URL*/ }
           items.push({ title: it.title, link: it.link, pubDate: it.pubDate, source: feed.name, domain });
         });
         return items;
