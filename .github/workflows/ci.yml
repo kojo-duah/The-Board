@@ -4,7 +4,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 on:
   push:
-    branches: [main, CD-Intergration]
+    branches: [main]
   pull_request:
     branches: [main]
 
