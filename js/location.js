@@ -40,7 +40,13 @@ export async function detectLocation() {
     try {
       const pos = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: false, timeout: 8000, maximumAge: 300000
+          // enableHighAccuracy: true uses GPS (on mobile) or precise WiFi/network
+          // positioning (on desktop). The extra timeout gives the device time to
+          // acquire a GPS fix — on a signage display this runs once then caches
+          // for 5 min (maximumAge), so the wait is a non-issue.
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 300000,
         });
       });
       const lat = pos.coords.latitude;

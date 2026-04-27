@@ -8,8 +8,13 @@ export function timeAgo(d) {
   if (s < 31536000) return Math.floor(s / 2592000) + 'mo ago'; // < 365 days
   return Math.floor(s / 31536000) + 'y ago';
 }
-export function esc(str) { 
-    const d = document.createElement('div'); 
-    d.textContent = str; 
-    return d.innerHTML; 
+// HTML-escapes a string so user/RSS content can be safely inserted with .innerHTML.
+// Pure string replacement — no DOM required — so this also works in Node/Jest.
+export function esc(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
