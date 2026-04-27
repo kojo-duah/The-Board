@@ -2,16 +2,16 @@
   "name": "the-board",
   "version": "1.0.0",
   "type": "module",
-  "description": "Project 2 for 3250",
-  "main": "index.js",
+  "description": "DigiSign — browser-based digital signage with auto-detecting weather, RSS news, and clock. MSU Denver CS 3250 Project 2.",
+  "homepage": "https://kojo-duah.github.io/The-Board/",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "lint": "eslint .",
     "docs": "jsdoc -c jsdoc.json",
     "check": "npm run lint && npm run test && npm run docs"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["digital-signage", "weather", "dashboard", "rss", "kiosk"],
+  "author": "The-Board team",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
