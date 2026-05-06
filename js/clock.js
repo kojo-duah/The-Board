@@ -15,10 +15,7 @@ export function updateClock() {
   const ampm = timeParts.find(p => p.type === 'dayPeriod')?.value || '';
   document.getElementById('clock-time').innerHTML = `${h}:${m}<span id="clock-ampm">${ampm}</span>`;
 
-  const dateFmt = new Intl.DateTimeFormat('en-US', {
-    timeZone: tz, weekday: 'long', month: 'short', day: 'numeric'
-  }).format(now);
-  document.getElementById('clock-date').textContent = dateFmt;
+  
 }
 
 
