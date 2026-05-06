@@ -1,6 +1,6 @@
 import { jest } from "@jest/globals";
 import { CONFIG } from "../js/config.js";
-import { reverseGeocode, applyLocation } from "../js/location.js";
+import { reverseGeocode, applyLocation, detectLocation} from "../js/location.js";
 
 describe("location.js", () => {
   beforeEach(() => {
@@ -124,4 +124,123 @@ describe("location.js", () => {
       expect(document.title).toContain("Denver, Colorado");
     });
   });
+  describe("detectLocation", () => {
+  test("uses browser geolocation when available", async () => {
+    Object.defineProperty(navigator, "geolocation", {
+      value: {
+        getCurrentPosition: jest.fn((success) => {
+          success({
+            coords: {
+              latitude: 39.7,
+              longitude: -104.9
+            }
+          });
+        })
+      },
+      configurable: true
+    });
+
+    fetch.mockResolvedValueOnce({
+      json: async () => ({
+        city: "Denver",
+        principalSubdivision: "Colorado",
+        countryCode: "US"
+      })
+    });
+
+    await detectLocation();
+
+    expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
+    expect(CONFIG.location).toEqual({
+      lat: 39.7,
+      lon: -104.9,
+      name: "Denver, Colorado"
+    });
+  });
+
+  test("uses IP-based fallback when geolocation fails", async () => {
+    Object.defineProperty(navigator, "geolocation", {
+      value: {
+        getCurrentPosition: jest.fn((success, reject) => {
+          reject(new Error("Permission denied"));
+        })
+      },
+      configurable: true
+    });
+
+    fetch.mockResolvedValueOnce({
+      json: async () => ({
+        latitude: 40.7,
+        longitude: -74.0,
+        city: "New York",
+        region: "New York",
+        country: "US",
+        timezone: "America/New_York"
+      })
+    });
+
+    await detectLocation();
+
+    expect(CONFIG.location).toEqual({
+      lat: 40.7,
+      lon: -74.0,
+      name: "New York, New York"
+    });
+  });
+
+  test("uses fallback Denver location when geolocation and IP lookup fail", async () => {
+    Object.defineProperty(navigator, "geolocation", {
+      value: {
+        getCurrentPosition: jest.fn((success, reject) => {
+          reject(new Error("Permission denied"));
+        })
+      },
+      configurable: true
+    });
+
+    fetch.mockRejectedValueOnce(new Error("IP lookup failed"));
+
+    jest.spyOn(console, "log").mockImplementation(() => {});
+    jest.spyOn(console, "warn").mockImplementation(() => {});
+
+    await detectLocation();
+
+    expect(CONFIG.location).toEqual({
+      lat: CONFIG.fallback.lat,
+      lon: CONFIG.fallback.lon,
+      name: CONFIG.fallback.name
+    });
+  });
+
+  test("uses IP fallback name when city or region is missing", async () => {
+    Object.defineProperty(navigator, "geolocation", {
+      value: {
+        getCurrentPosition: jest.fn((success, reject) => {
+          reject(new Error("Permission denied"));
+        })
+      },
+      configurable: true
+    });
+
+    fetch.mockResolvedValueOnce({
+      json: async () => ({
+        latitude: 10,
+        longitude: 20,
+        city: "",
+        region: "",
+        country: "US",
+        country_name: "United States",
+        timezone: "America/Denver"
+      })
+    });
+
+    await detectLocation();
+
+    expect(CONFIG.location).toEqual({
+      lat: 10,
+      lon: 20,
+      name: CONFIG.fallback.name
+    });
+  });
+});
 });

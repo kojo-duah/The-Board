@@ -163,4 +163,58 @@ describe("news.js", () => {
     expect(html).not.toContain("<script>");
     expect(html).toContain("&lt;script&gt;");
   });
+  test("fetchOneFeed parses RSS XML from CORS proxy when rss2json fails", async () => {
+    // First fetch = rss2json fails
+    fetch.mockResolvedValueOnce({
+        ok: false,
+        json: async () => ({})
+    });
+
+    // Second fetch = first CORS proxy succeeds with XML
+    fetch.mockResolvedValueOnce({
+        ok: true,
+        text: async () => `
+        <rss>
+            <channel>
+            <item>
+                <title>XML Article</title>
+                <link>https://xml.example.com/story</link>
+                <pubDate>Wed, 06 May 2026 12:00:00 GMT</pubDate>
+            </item>
+            </channel>
+        </rss>
+        `
+    });
+
+    const result = await fetchOneFeed(CONFIG.feeds[0]);
+
+    expect(result).toHaveLength(1);
+    expect(result[0]).toEqual({
+        title: "XML Article",
+        link: "https://xml.example.com/story",
+        pubDate: "Wed, 06 May 2026 12:00:00 GMT",
+        source: "Example",
+        domain: "xml.example.com"
+    });
+    });
+    test("fetchOneFeed skips proxy XML responses with no items", async () => {
+        // rss2json fails
+        fetch.mockResolvedValueOnce({
+            ok: false,
+            json: async () => ({})
+        });
+
+        // proxy returns XML but no item elements
+        fetch.mockResolvedValueOnce({
+            ok: true,
+            text: async () => `<rss><channel></channel></rss>`
+        });
+
+        // remaining proxies fail
+        fetch.mockRejectedValue(new Error("Proxy failed"));
+
+        const result = await fetchOneFeed(CONFIG.feeds[0]);
+
+        expect(result).toEqual([]);
+        });
 });
