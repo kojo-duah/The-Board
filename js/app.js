@@ -4,6 +4,7 @@ import { fetchNews, cycleNews } from "./news.js";
 import { detectLocation } from "./location.js";
 import { fetchWeather } from "./weather.js";
 import { updateCalendar, updateClock } from "./clock.js";
+import { setupImageUpload } from "./image.js";
 
 function init() {
     //Settings
@@ -27,5 +28,8 @@ function init() {
 
     //Calender
     setInterval(updateCalendar, 60000);
+
+    //Image Upload
+    setupImageUpload();
 }
 document.addEventListener('DOMContentLoaded', init);
