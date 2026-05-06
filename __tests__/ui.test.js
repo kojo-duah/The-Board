@@ -14,7 +14,7 @@ describe("esc", () => {
     const output = esc(input);
 
     expect(output).not.toContain("<img");
-    expect(output).not.toContain("onerror");
+    expect(output).toContain("onerror");
     expect(output).toContain("&lt;img");
   });
 

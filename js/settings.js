@@ -32,12 +32,12 @@ export function addFeed() {
   CONFIG.feeds.push({ type: "RSS", url, name });
   nameEl.value = ''; urlEl.value = '';
   renderFeedList();
-  fetchNews();
+  return fetchNews();
 }
 export function removeFeed(i) {
   CONFIG.feeds.splice(i, 1);
   renderFeedList();
-  fetchNews();
+  return fetchNews();
 }
 export function settingsButton() {
     const openBtn = document.getElementById('settings-btn');

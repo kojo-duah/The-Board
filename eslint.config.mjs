@@ -18,8 +18,9 @@ export default defineConfig([
     ...js.configs.recommended,
     languageOptions: {
       globals: {
-        ...globals.node,
+        ...globals.browser,
         ...globals.jest,
+        ...globals.node,
       },
       sourceType: "module",
     },
